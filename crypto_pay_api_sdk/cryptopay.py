@@ -27,13 +27,22 @@ class Crypto:
             'Crypto-Pay-API-Token': self.token
         }
 
-    async def _request(self, method, endpoint, **kwargs):
+    async def _request(
+            self,
+            method,
+            endpoint,
+            data: dict = None
+    ):
+        if data:
+            data = {
+                k: v for k, v in data.items() if v is not None
+            }
         async with aiohttp.ClientSession() as session:
             async with session.request(
                     method,
                     f'{self.url}/{endpoint}',
                     headers=self.headers,
-                    **kwargs
+                    json=data
             ) as response:
                 return await response.json()
 
@@ -48,7 +57,12 @@ class Crypto:
         """
         return await self._request('GET', 'getMe')
 
-    async def createInvoice(self, asset: str, amount: str, params={}):
+    async def createInvoice(
+            self,
+            asset: str,
+            amount: str,
+            **kwargs
+    ):
         """Use this method to create a new invoice.
 
         Args:
@@ -76,10 +90,24 @@ class Crypto:
         Returns:
             Object of created invoice.
         """
-        json_data = {'asset': asset, 'amount': amount, **params}
-        return await self._request('POST', 'createInvoice', json=json_data)
+        return await self._request(
+            'POST',
+            'createInvoice',
+            data={
+                'asset': asset,
+                'amount': amount,
+                **kwargs
+            }
+        )
 
-    async def transfer(self, user_id: int, asset: str, amount: str, spend_id: str, params={}):
+    async def transfer(
+            self,
+            user_id: int,
+            asset: str,
+            amount: str,
+            spend_id: str,
+            **kwargs
+    ):
         """Use this method to send coins from your app to the user.
 
         Args:
@@ -98,10 +126,19 @@ class Crypto:
         Returns:
             Object of completed transfer.
         """
-        json_data = {'user_id': user_id, 'asset': asset, 'amount': amount, 'spend_id': spend_id, **params}
-        return await self._request('POST', 'transfer', json=json_data)
+        return await self._request(
+            'POST',
+            'transfer',
+            data={
+                'user_id': user_id,
+                'asset': asset,
+                'amount': amount,
+                'spend_id': spend_id,
+                **kwargs
+            }
+        )
 
-    async def getInvoices(self, params={}):
+    async def getInvoices(self, **kwargs):
         """Use this method to get invoices created by your app.
 
         Args:
@@ -119,7 +156,7 @@ class Crypto:
         Returns:
             Array of invoices
         """
-        return await self._request('GET', 'getInvoices', json=params)
+        return await self._request('GET', 'getInvoices', kwargs)
 
     async def getBalance(self):
         """Use this method to get balance of your app
@@ -167,7 +204,7 @@ class Crypto:
         return await self._request(
             'POST',
             'createCheck',
-            json={
+            {
                 'asset': asset,
                 'amount': amount,
                 'pin_to_user_id': pin_to_user_id,
@@ -190,7 +227,7 @@ class Crypto:
         return await self._request(
             'POST',
             'deleteCheck',
-            json={
+            {
                 'check_id': check_id
             }
         )
@@ -223,7 +260,7 @@ class Crypto:
         return await self._request(
             'GET',
             'getChecks',
-            json={
+            {
                 'asset': asset,
                 'check_ids': check_ids,
                 'status': status,
@@ -242,3 +279,28 @@ class Crypto:
             Array of currencies
         """
         return await self._request('GET', 'getCurrencies')
+
+    async def getStats(
+            self,
+            start_at: str = None,
+            end_at: str = None
+    ):
+        """Use this method to get app statistics.
+
+        Args: offset {string} - Optional. Date from which start calculating statistics in ISO 8601 format. Defaults
+        is current date minus 24 hours.
+
+            count {number} - Optional. The date on which to finish calculating statistics in ISO 8601 format.
+            Defaults is current date.
+
+        Returns:
+            AppStats on success.
+        """
+        return await self._request(
+            'GET',
+            'getStats',
+            {
+                'start_at': start_at,
+                'end_at': end_at
+            }
+        )
