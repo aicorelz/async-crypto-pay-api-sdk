@@ -60,7 +60,7 @@ class Crypto:
     async def createInvoice(
             self,
             asset: str,
-            amount: str,
+            amount: float | int,
             **kwargs
     ):
         """Use this method to create a new invoice.
@@ -95,7 +95,7 @@ class Crypto:
             'createInvoice',
             data={
                 'asset': asset,
-                'amount': amount,
+                'amount': str(amount),
                 **kwargs
             }
         )
