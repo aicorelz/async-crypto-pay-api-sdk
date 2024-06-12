@@ -104,7 +104,7 @@ class Crypto:
             self,
             user_id: int,
             asset: str,
-            amount: str,
+            amount: float | int,
             spend_id: str,
             **kwargs
     ):
@@ -132,7 +132,7 @@ class Crypto:
             data={
                 'user_id': user_id,
                 'asset': asset,
-                'amount': amount,
+                'amount': str(amount),
                 'spend_id': spend_id,
                 **kwargs
             }
@@ -190,7 +190,7 @@ class Crypto:
     async def createCheck(
             self,
             asset: str,
-            amount: str,
+            amount: float | int,
             pin_to_user_id: int = None,
             pin_to_username: str = None,
     ):
@@ -213,7 +213,7 @@ class Crypto:
             'createCheck',
             {
                 'asset': asset,
-                'amount': amount,
+                'amount': str(amount),
                 'pin_to_user_id': pin_to_user_id,
                 'pin_to_username': pin_to_username
             }
