@@ -6,7 +6,7 @@
 
 # Installation
 ```sh
-pip install crypto-pay-api-sdk
+pip install async-crypto-pay-api-sdk
 ```
 
 # Explanation

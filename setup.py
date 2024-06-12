@@ -6,10 +6,10 @@ version = '1.3.4'
 with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
 setup(
-    name = 'crypto_pay_api_sdk',
-    author = 'Vyacheslav Zhigulin',
-    author_email = 'muxellexum@gmail.com',
-    url = 'https://github.com/sllavon/crypto-pay-api-sdk',
+    name = 'async_crypto_pay_api_sdk',
+    author = 'Aicorelz',
+    # author_email = 'muxellexum@gmail.com',
+    url = 'https://github.com/aicorelz/async-crypto-pay-api-sdk',
     description = 'API for CryptoBot',
     long_description = long_description,
     long_description_content_type = 'text/markdown',
@@ -21,7 +21,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Topic :: Software Development :: Libraries :: Python Modules'
     ],
-    packages = ['crypto_pay_api_sdk'],
+    packages = ['async_crypto_pay_api_sdk'],
     where = ['where'],
-    install_requires = ['requests'],
+    install_requires = ['aiohttp'],
 )
