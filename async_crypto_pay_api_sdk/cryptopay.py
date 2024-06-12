@@ -111,7 +111,7 @@ class Crypto:
                 'amount': str(amount),
                 'description': description,
                 'hidden_message': hidden_message,
-                'paid_btn_name': paid_btn_name',
+                'paid_btn_name': paid_btn_name,
                 'paid_btn_url': paid_btn_url,
                 'payload': payload,
                 'allow_comments': allow_comments,
