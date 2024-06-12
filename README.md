@@ -2,8 +2,6 @@
 # @aicorelz/async-crypto-pay-api-sdk
 ## [SDK for working with Crypto Bot](https://t.me/CryptoBot)
 
-[![Downloads](https://static.pepy.tech/badge/crypto-pay-api-sdk)](https://pepy.tech/project/crypto-pay-api-sdk) [![TON](https://camo.githubusercontent.com/862a7c69bd3b8a405bdd94557b8e6d5a90702f363058e59fd8dadda3adb60a97/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f2546302539462539322538452d544f4e2d677265656e)](https://ton.org) [![license - MIT](https://camo.githubusercontent.com/63691059c8dda9856bd568ef8bb0b326677b863d8b1fc9237cc096b6fd18a205/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6963656e73652f737461732d70726f6b6f706965762f697079776964676574735f746f67676c655f627574746f6e73)](https://github.com/sllavon/crypto-pay-api-sdk/blob/main/LICENSE) 
-
 # Installation
 ```sh
 pip install git+https://github.com/aicorelz/async-crypto-pay-api-sdk
@@ -27,17 +25,24 @@ Open [@CryptoBot](http://t.me/CryptoBot?start=pay) or [@CryptoTestnetBot](http:/
 from async_crypto_pay_api_sdk import cryptopay
 import asyncio
 
-Crypto = cryptopay.Crypto('TOKEN', testnet = True) # default testnet = False
+Crypto = cryptopay.Crypto('TOKEN', testnet=True)  # default testnet = False
+
 
 async def main():
-  print(await Crypto.getMe())
+    print(
+        await Crypto.getMe()
+    )
 
-  print(Crypto.createInvoice(
-    'TON', 
-    '0.4', 
-    description='Test Invoice',
-    expires_in=300))
-  
+    print(
+        await Crypto.createInvoice(
+            'TON',
+            '0.4',
+            description='Test Invoice',
+            expires_in=300
+        )
+    )
+
+
 asyncio.run(main())
 ```
 
