@@ -1,5 +1,4 @@
 import aiohttp
-import asyncio
 
 
 class Crypto:
@@ -47,7 +46,7 @@ class Crypto:
             ) as response:
                 return await response.json()
 
-    async def getMe(self, force: bool = False):
+    async def get_me(self, force: bool = False):
         """A simple method for testing your app's authentication token.
 
         Args:
@@ -63,7 +62,7 @@ class Crypto:
             )
         return self._me
 
-    async def createInvoice(
+    async def create_invoice(
             self,
             asset: str,
             amount: float | int,
@@ -160,7 +159,40 @@ class Crypto:
             }
         )
 
-    async def getInvoices(
+    async def get_transfers(
+            self,
+            asset: str = None,
+            transfer_ids: list = None,
+            offset: int = None,
+            count: int = None,
+    ):
+        """Use this method to get transfers created by your app.
+
+        Args:
+            asset -- Optional. Currency code.
+            Supported assets: `BTC`, `TON`, `ETH` (only testnet), `USDT`, `USDC`, `BUSD`. Default: all assets
+
+            transfer_ids {string} - Optional. List of transfer IDs separated by comma.
+
+            offset {number} - Optional. Offset needed to return a specific subset of invoices. `Default 0`
+
+            count {number} - Optional. Number of invoices to return. `Default 100, max 1000`
+
+        Returns:
+            Array of Transfer
+        """
+        return await self._request(
+            'GET',
+            'getInvoices',
+            {
+                'asset': asset,
+                'transfer_ids': transfer_ids,
+                'offset': offset,
+                'count': count
+            }
+        )
+
+    async def get_invoices(
             self,
             asset: str = None,
             invoice_ids: list = None,
@@ -185,9 +217,19 @@ class Crypto:
         Returns:
             Array of invoices
         """
-        return await self._request('GET', 'getInvoices', kwargs)
+        return await self._request(
+            'GET',
+            'getInvoices',
+            {
+                'asset': asset,
+                'invoice_ids': invoice_ids,
+                'status': status,
+                'offset': offset,
+                'count': count
+            }
+        )
 
-    async def getBalance(self):
+    async def get_balance(self):
         """Use this method to get balance of your app
 
         Args:
@@ -198,7 +240,7 @@ class Crypto:
         """
         return await self._request('GET', 'getBalance')
 
-    async def getExchangeRates(self):
+    async def get_exchange_rates(self):
         """Use this method to get exchange rates of supported currencies
 
         Args:
@@ -209,7 +251,7 @@ class Crypto:
         """
         return await self._request('GET', 'getExchangeRates')
 
-    async def createCheck(
+    async def create_check(
             self,
             asset: str,
             amount: float | int,
@@ -223,7 +265,7 @@ class Crypto:
 
             amount {string} - Amount of the invoice in float. For example: `125.50`
 
-            pin_to_user_id {int} - Optional. ID of the user who will be able to activate the check.
+            pin_to_user_id {number} - Optional. ID of the user who will be able to activate the check.
 
             pin_to_username {string} - Optional. A user with the specified username will be able to activate the check.
 
@@ -241,7 +283,7 @@ class Crypto:
             }
         )
 
-    async def deleteCheck(
+    async def delete_check(
             self,
             check_id: str
     ):
@@ -261,7 +303,7 @@ class Crypto:
             }
         )
 
-    async def getChecks(
+    async def get_checks(
             self,
             asset: str = None,
             check_ids: list = None,
@@ -298,7 +340,7 @@ class Crypto:
             }
         )
 
-    async def getCurrencies(self):
+    async def get_currencies(self):
         """Use this method to supported currencies
 
         Args:
@@ -309,7 +351,7 @@ class Crypto:
         """
         return await self._request('GET', 'getCurrencies')
 
-    async def getStats(
+    async def get_stats(
             self,
             start_at: str = None,
             end_at: str = None
@@ -334,3 +376,5 @@ class Crypto:
                 'end_at': end_at
             }
         )
+
+
