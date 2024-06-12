@@ -67,7 +67,14 @@ class Crypto:
             self,
             asset: str,
             amount: float | int,
-            **kwargs
+            description: str = None,
+            hidden_message: str = None,
+            paid_btn_name: str = None,
+            paid_btn_url: str = None,
+            payload: str = None,
+            allow_comments: bool = None,
+            allow_anonymous: bool = None,
+            expires_in: int = None
     ):
         """Use this method to create a new invoice.
 
@@ -91,7 +98,7 @@ class Crypto:
 
             allow_anonymous  {boolean} - Optional. Allow pay invoice as anonymous. `Default is true`
 
-            expires_in {boolean} - Optional. You can set the expiration date of the invoice in seconds. Use this period: `1-2678400 seconds`
+            expires_in {number} - Optional. You can set the expiration date of the invoice in seconds. Use this period: `1-2678400 seconds`
 
         Returns:
             Object of created invoice.
@@ -102,7 +109,14 @@ class Crypto:
             data={
                 'asset': asset,
                 'amount': str(amount),
-                **kwargs
+                'description': description,
+                'hidden_message': hidden_message,
+                'paid_btn_name': paid_btn_name',
+                'paid_btn_url': paid_btn_url,
+                'payload': payload,
+                'allow_comments': allow_comments,
+                'allow_anonymous': allow_anonymous,
+                'expires_in': expires_in
             }
         )
 
@@ -112,7 +126,8 @@ class Crypto:
             asset: str,
             amount: float | int,
             spend_id: str,
-            **kwargs
+            comment: str = None,
+            disable_send_notification: bool = False
     ):
         """Use this method to send coins from your app to the user.
 
@@ -140,7 +155,8 @@ class Crypto:
                 'asset': asset,
                 'amount': str(amount),
                 'spend_id': spend_id,
-                **kwargs
+                'comment': comment,
+                'disable_send_notification': disable_send_notification
             }
         )
 
@@ -303,8 +319,9 @@ class Crypto:
         Args: offset {string} - Optional. Date from which start calculating statistics in ISO 8601 format. Defaults
         is current date minus 24 hours.
 
-            count {number} - Optional. The date on which to finish calculating statistics in ISO 8601 format.
-            Defaults is current date.
+            start_at {string} - Optional. Date from which start calculating statistics in ISO 8601 format. Defaults is current date minus 24 hours.
+
+            end_at {string} - Optional. The date on which to finish calculating statistics in ISO 8601 format. Defaults is current date.
 
         Returns:
             AppStats on success.
