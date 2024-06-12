@@ -21,26 +21,27 @@ Open [@CryptoBot](http://t.me/CryptoBot?start=pay) or [@CryptoTestnetBot](http:/
 
 # Examples
 **Support for all methods [official API](https://help.crypt.bot/crypto-pay-api)**
+
 ```python
-from async_crypto_pay_api_sdk import cryptopay
+from async_crypto_pay import cryptopay
 import asyncio
 
 Crypto = cryptopay.Crypto('TOKEN', testnet=True)  # default testnet = False
 
 
 async def main():
-    print(
-        await Crypto.getMe()
-    )
+  print(
+    await Crypto.get_me()
+  )
 
-    print(
-        await Crypto.createInvoice(
-            'TON',
-            '0.4',
-            description='Test Invoice',
-            expires_in=300
-        )
+  print(
+    await Crypto.create_invoice(
+      'TON',
+      0.4,
+      description='Test Invoice',
+      expires_in=300
     )
+  )
 
 
 asyncio.run(main())
@@ -64,7 +65,7 @@ asyncio.run(main())
 A simple method for testing your app's authentication token. Requires no parameters. Returns basic information about the app.
 
 ```python
-await Crypto.getMe()
+await Crypto.get_me()
 ```
 
 ### createInvoice
@@ -99,7 +100,7 @@ Amount of the invoice in float. For example: `125.50`
 *Optional*. You can set the expiration date of the invoice in seconds. Use this period: 1-2678400 seconds.
 
 ```python
-await Crypto.createInvoice(
+await Crypto.create_invoice(
   "BTC", 
   1, 
   description='kitten', 
@@ -149,7 +150,7 @@ Use this method to get invoices of your app. On success, the returns array of in
 *Optional*. Number of invoices to return. Default 100, max 1000.
 
 ```python
-await Crypto.getInvoices('TON', 1)
+await Crypto.get_invoices('TON', 1)
 ```
 
 ### getBalance
@@ -157,7 +158,7 @@ await Crypto.getInvoices('TON', 1)
 Use this method to get balance of your app. Returns array of assets.
 
 ```python
-await Crypto.getBalance()
+await Crypto.get_balance()
 ```
 
 ### getExchangeRates
@@ -165,7 +166,7 @@ await Crypto.getBalance()
 Use this method to get exchange rates of supported currencies. Returns array of currencies.
 
 ```python
-await Crypto.getExchangeRates()
+await Crypto.get_exchange_rates()
 ```
 
 ### getCurrencies
@@ -173,7 +174,7 @@ await Crypto.getExchangeRates()
 Use this method to supported currencies. Returns array of currencies.
 
 ```python
-await Crypto.getCurrencies()
+await Crypto.get_currencies()
 ```
 
 ## License

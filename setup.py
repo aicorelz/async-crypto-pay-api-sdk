@@ -6,7 +6,7 @@ version = '1.3.4'
 with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
 setup(
-    name = 'async_crypto_pay_api_sdk',
+    name = 'async_crypto_pay',
     author = 'Aicorelz',
     # author_email = 'muxellexum@gmail.com',
     url = 'https://github.com/aicorelz/async-crypto-pay-api-sdk',
@@ -21,7 +21,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Topic :: Software Development :: Libraries :: Python Modules'
     ],
-    packages = ['async_crypto_pay_api_sdk'],
+    packages = ['async_crypto_pay'],
     where = ['where'],
     install_requires = ['aiohttp'],
 )
