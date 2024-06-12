@@ -6,7 +6,7 @@
 
 # Installation
 ```sh
-pip install https://github.com/aicorelz/async-crypto-pay-api-sdk
+pip install git+https://github.com/aicorelz/async-crypto-pay-api-sdk
 ```
 
 # Explanation
