@@ -1,12 +1,12 @@
 ![](https://raw.githubusercontent.com/sllavon/crypto-pay-api-sdk/3e83818c975a47f4ca61209b478f2508224058db/media/header.svg)
-# @muxel/crypto-pay-api-sdk
+# @aicorelz/async-crypto-pay-api-sdk
 ## [SDK for working with Crypto Bot](https://t.me/CryptoBot)
 
 [![Downloads](https://static.pepy.tech/badge/crypto-pay-api-sdk)](https://pepy.tech/project/crypto-pay-api-sdk) [![TON](https://camo.githubusercontent.com/862a7c69bd3b8a405bdd94557b8e6d5a90702f363058e59fd8dadda3adb60a97/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f2546302539462539322538452d544f4e2d677265656e)](https://ton.org) [![license - MIT](https://camo.githubusercontent.com/63691059c8dda9856bd568ef8bb0b326677b863d8b1fc9237cc096b6fd18a205/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6963656e73652f737461732d70726f6b6f706965762f697079776964676574735f746f67676c655f627574746f6e73)](https://github.com/sllavon/crypto-pay-api-sdk/blob/main/LICENSE) 
 
 # Installation
 ```sh
-pip install async-crypto-pay-api-sdk
+pip install https://github.com/aicorelz/async-crypto-pay-api-sdk
 ```
 
 # Explanation
@@ -24,14 +24,21 @@ Open [@CryptoBot](http://t.me/CryptoBot?start=pay) or [@CryptoTestnetBot](http:/
 # Examples
 **Support for all methods [official API](https://help.crypt.bot/crypto-pay-api)**
 ```python
-from crypto_pay_api_sdk import cryptopay
+from async_crypto_pay_api_sdk import cryptopay
+import asyncio
 
-Crypto = cryptopay.Crypto("TOKEN", testnet = True) #default testnet = False
+Crypto = cryptopay.Crypto('TOKEN', testnet = True) # default testnet = False
 
-print(Crypto.getMe())
-print(Crypto.createInvoice("TON", "0.4", params={"description": "Test Invoice",
-                                                 "expires_in": 300
-                                                 }))
+async def main():
+  print(await Crypto.getMe())
+
+  print(Crypto.createInvoice(
+    'TON', 
+    '0.4', 
+    description='Test Invoice',
+    expires_in=300))
+  
+asyncio.run(main())
 ```
 
 ## Methods
@@ -45,13 +52,14 @@ print(Crypto.createInvoice("TON", "0.4", params={"description": "Test Invoice",
 * [getBalance](#getBalance)
 * [getExchangeRates](#getExchangeRates)
 * [getCurrencies](#getCurrencies)
+* мне лень
 
 ### getMe
 
 A simple method for testing your app's authentication token. Requires no parameters. Returns basic information about the app.
 
 ```python
-Crypto.getMe()
+await Crypto.getMe()
 ```
 
 ### createInvoice
@@ -86,12 +94,13 @@ Amount of the invoice in float. For example: `125.50`
 *Optional*. You can set the expiration date of the invoice in seconds. Use this period: 1-2678400 seconds.
 
 ```python
-Crypto.createInvoice("BTC", 1,
-                    params = {
-                        description: 'kitten',
-                        paid_btn_name: viewItem,
-                        paid_btn_url: 'http://placekitten.com/150'
-                    })
+await Crypto.createInvoice(
+  "BTC", 
+  1, 
+  description='kitten', 
+  paid_btn_name=viewItem,
+  paid_btn_url='http://placekitten.com/150'
+)
 ```
 
 ### transfer
@@ -110,11 +119,13 @@ It is used to make your request idempotent. It's guaranteed that only one of the
 *Optional*. The comment of the invoice. The comment will show in the notification about the transfer. Up to 1024 symbols.
 
 ```python
-Crypto.transfer(121011054, 'ETH',
-                0.1, 'ZG9uYXRl',
-                params = {
-                    comment: 'donate'
-                })
+await Crypto.transfer(
+  121011054, 
+  'ETH',
+  0.1, 
+  'ZG9uYXRl',
+  comment='donate'
+)
 ```
 
 ### getInvoices
@@ -133,7 +144,7 @@ Use this method to get invoices of your app. On success, the returns array of in
 *Optional*. Number of invoices to return. Default 100, max 1000.
 
 ```python
-Crypto.getInvoices(params = {'asset': "TON", 'count': 1})
+await Crypto.getInvoices('TON', 1)
 ```
 
 ### getBalance
@@ -141,7 +152,7 @@ Crypto.getInvoices(params = {'asset': "TON", 'count': 1})
 Use this method to get balance of your app. Returns array of assets.
 
 ```python
-Crypto.getBalance()
+await Crypto.getBalance()
 ```
 
 ### getExchangeRates
@@ -149,7 +160,7 @@ Crypto.getBalance()
 Use this method to get exchange rates of supported currencies. Returns array of currencies.
 
 ```python
-Crypto.getExchangeRates()
+await Crypto.getExchangeRates()
 ```
 
 ### getCurrencies
@@ -157,7 +168,7 @@ Crypto.getExchangeRates()
 Use this method to supported currencies. Returns array of currencies.
 
 ```python
-Crypto.getCurrencies()
+await Crypto.getCurrencies()
 ```
 
 ## License
