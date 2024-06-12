@@ -18,6 +18,7 @@ class Crypto:
             testnet: bool = False
     ):
         self.token = str(token)
+        self._me = None
         if testnet:
             self.url = 'https://testnet-pay.crypt.bot/api'
         else:
@@ -46,16 +47,21 @@ class Crypto:
             ) as response:
                 return await response.json()
 
-    async def getMe(self):
+    async def getMe(self, force: bool = False):
         """A simple method for testing your app's authentication token.
 
         Args:
-            Requires no parameters.
+            force {bool} - Makes a new api request for getMe()
 
         Returns:
             Basic information about the app.
         """
-        return await self._request('GET', 'getMe')
+        if force or not self._me:
+            self._me = await self._request(
+                'GET', 
+                'getMe'
+            )
+        return self._me
 
     async def createInvoice(
             self,
