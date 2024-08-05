@@ -26,16 +26,16 @@ Open [@CryptoBot](http://t.me/CryptoBot?start=pay) or [@CryptoTestnetBot](http:/
 from async_crypto_pay import cryptopay
 import asyncio
 
-Crypto = cryptopay.Crypto('TOKEN', testnet=True)  # default testnet = False
+crypto = cryptopay.Crypto('TOKEN', testnet=True)  # default testnet = False
 
 
 async def main():
   print(
-    await Crypto.get_me()
+    await crypto.get_me()
   )
 
   print(
-    await Crypto.create_invoice(
+    await crypto.create_invoice(
       'TON',
       0.4,
       description='Test Invoice',
@@ -65,7 +65,7 @@ asyncio.run(main())
 A simple method for testing your app's authentication token. Requires no parameters. Returns basic information about the app.
 
 ```python
-await Crypto.get_me()
+await crypto.get_me()
 ```
 
 ### createInvoice
@@ -100,11 +100,11 @@ Amount of the invoice in float. For example: `125.50`
 *Optional*. You can set the expiration date of the invoice in seconds. Use this period: 1-2678400 seconds.
 
 ```python
-await Crypto.create_invoice(
-  "BTC", 
+await crypto.create_invoice(
+  'BTC', 
   1, 
   description='kitten', 
-  paid_btn_name=viewItem,
+  paid_btn_name='viewItem',
   paid_btn_url='http://placekitten.com/150'
 )
 ```
@@ -125,7 +125,7 @@ It is used to make your request idempotent. It's guaranteed that only one of the
 *Optional*. The comment of the invoice. The comment will show in the notification about the transfer. Up to 1024 symbols.
 
 ```python
-await Crypto.transfer(
+await crypto.transfer(
   121011054, 
   'ETH',
   0.1, 
@@ -150,7 +150,7 @@ Use this method to get invoices of your app. On success, the returns array of in
 *Optional*. Number of invoices to return. Default 100, max 1000.
 
 ```python
-await Crypto.get_invoices('TON', 1)
+await crypto.get_invoices('TON', 1)
 ```
 
 ### getBalance
@@ -158,7 +158,7 @@ await Crypto.get_invoices('TON', 1)
 Use this method to get balance of your app. Returns array of assets.
 
 ```python
-await Crypto.get_balance()
+await crypto.get_balance()
 ```
 
 ### getExchangeRates
@@ -166,7 +166,7 @@ await Crypto.get_balance()
 Use this method to get exchange rates of supported currencies. Returns array of currencies.
 
 ```python
-await Crypto.get_exchange_rates()
+await crypto.get_exchange_rates()
 ```
 
 ### getCurrencies
@@ -174,7 +174,7 @@ await Crypto.get_exchange_rates()
 Use this method to supported currencies. Returns array of currencies.
 
 ```python
-await Crypto.get_currencies()
+await crypto.get_currencies()
 ```
 
 ## License

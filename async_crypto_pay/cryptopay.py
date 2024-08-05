@@ -22,6 +22,7 @@ class Crypto:
             self.url = 'https://testnet-pay.crypt.bot/api'
         else:
             self.url = 'https://pay.crypt.bot/api'
+        self._session = aiohttp.ClientSession()
         self.headers = {
             'Content-Type': 'application/json',
             'Crypto-Pay-API-Token': self.token
@@ -37,14 +38,13 @@ class Crypto:
             data = {
                 k: v for k, v in data.items() if v is not None
             }
-        async with aiohttp.ClientSession() as session:
-            async with session.request(
-                    method,
-                    f'{self.url}/{endpoint}',
-                    headers=self.headers,
-                    json=data
-            ) as response:
-                return await response.json()
+        async with self._session.request(
+            method,
+            f'{self.url}/{endpoint}',
+            headers=self.headers,
+            json=data
+        ) as response:
+            return await response.json()
 
     async def get_me(self, force: bool = False):
         """A simple method for testing your app's authentication token.
